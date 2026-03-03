@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mystery Box Challenge | APPgeroMetrics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div id="randomizer-section">
+        <h1 id="round-title">🥘 Round 1: Main Dish 1</h1>
+        <p id="round-subtitle">Reveal your 4 mandatory ingredients!</p>
+        
+        <div class="ingredient-grid">
+            <div class="card"><h3>PROTEIN</h3><div class="slot" id="slot-0">?</div></div>
+            <div class="card"><h3>PRODUCE</h3><div class="slot" id="slot-1">?</div></div>
+            <div class="card"><h3>CARB</h3><div class="slot" id="slot-2">?</div></div>
+            <div class="card"><h3>WILDCARD</h3><div class="slot" id="slot-3">?</div></div>
+        </div>
+        <button id="generate-btn">Randomize Main 1</button>
+    </div>
+
+    <div id="recipe-section" style="display: none;">
+        <h1>📝 Create Your Menu</h1>
+        <div class="summary-box" id="final-summary"></div>
+        <form id="recipe-form">
+            <input type="text" id="group-name" placeholder="Group/Team Name" required>
+            
+            <div class="member-grid">
+                <input type="text" class="member-input" placeholder="Chef 1 (Required)" required>
+                <input type="text" class="member-input" placeholder="Chef 2">
+                <input type="text" class="member-input" placeholder="Chef 3">
+                <input type="text" class="member-input" placeholder="Chef 4">
+                <input type="text" class="member-input" placeholder="Chef 5">
+                <input type="text" class="member-input" placeholder="Chef 6">
+            </div>
+            
+            <div class="recipe-inputs">
+                <h3>Main Dish 1</h3>
+                <input type="text" id="m1-title" placeholder="Recipe Title" required>
+                <textarea id="m1-steps" placeholder="Instructions..." rows="3" required></textarea>
+
+                <h3>Main Dish 2</h3>
+                <input type="text" id="m2-title" placeholder="Recipe Title" required>
+                <textarea id="m2-steps" placeholder="Instructions..." rows="3" required></textarea>
+
+                <h3>Beverage</h3>
+                <input type="text" id="bev-title" placeholder="Drink Title" required>
+                <textarea id="bev-steps" placeholder="Instructions..." rows="2" required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Final Menu</button>
+        </form>
+    </div>
+
+    <div id="display-section" style="display: none;">
+        <h1 id="display-group-name">GROUP NAME</h1>
+        <div id="display-members-list" class="team-banner"></div>
+        
+        <div id="tables-container"></div>
+
+        <div class="action-buttons">
+            <button onclick="window.print()" class="print-btn">🖨️ Print Recipes</button>
+            <button onclick="location.reload()" class="reset-btn">🔄 Start New Group</button>
+        </div>
+    </div>
+
+    <footer class="creator-footer">
+        <p>© 2026 <strong>APPgeroMetrics</strong></p>
+        <p class="brand">CREATOR: GERO VALENCIA</p>
+    </footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+:root {
+    --primary-orange: #e67e22;
+    --bg-gray: #f4f7f9;
+    --text-dark: #2d3436;
+}
+
+* { box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+
+body { 
+    background-color: var(--bg-gray); 
+    margin: 0; 
+    display: flex; 
+    justify-content: center; 
+    padding: 20px 10px; 
+}
+
+.container { 
+    width: 100%; 
+    max-width: 800px; 
+    background: white; 
+    padding: 40px 20px; 
+    border-radius: 24px; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+    text-align: center; 
+}
+
+h1 { font-size: 2rem; margin-bottom: 5px; color: var(--text-dark); }
+p { color: #636e72; margin-bottom: 30px; }
+
+/* Grid logic as seen in image */
+.ingredient-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; 
+    margin: 30px 0; 
+}
+
+@media (min-width: 600px) {
+    .ingredient-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.card { 
+    background: #fff; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 12px; 
+    padding: 15px 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.card h3 { font-size: 0.7rem; color: #b2bec3; letter-spacing: 1px; margin: 0 0 10px 0; }
+
+.slot { 
+    font-size: 1.2rem; 
+    font-weight: 700; 
+    color: var(--text-dark); 
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Form Styles */
+.member-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+input, textarea { 
+    width: 100%; padding: 14px; margin: 5px 0; 
+    border: 1px solid #dfe6e9; border-radius: 10px; font-size: 16px; 
+}
+
+button { 
+    width: 100%; background: var(--primary-orange); color: white; border: none; 
+    padding: 18px; font-size: 1.1rem; font-weight: 700; border-radius: 14px; 
+    cursor: pointer; transition: background 0.2s; 
+}
+
+/* Final Recipe Tables */
+.recipe-card { border: 1px solid #eee; border-radius: 15px; margin-bottom: 30px; overflow: hidden; text-align: left; }
+.menu-table { width: 100%; border-collapse: collapse; }
+.menu-table th { background: var(--text-dark); color: #fab1a0; padding: 15px; text-align: left; }
+.menu-table td { padding: 15px; border-bottom: 1px solid #f1f1f1; }
+.label-cell { background: #fafafa; font-weight: bold; width: 30%; color: #636e72; font-size: 0.8rem; text-transform: uppercase; }
+
+/* Footer Styling from image */
+.creator-footer { 
+    margin-top: 50px; text-align: right; border-top: 1px solid #eee; padding-top: 10px;
+}
+.creator-footer p { margin: 0; font-size: 0.8rem; color: #b2bec3; }
+.creator-footer strong { color: #2d3436; }
+.brand { font-size: 0.65rem !important; margin-top: 3px !important; }
+
+@media print {
+    .action-buttons { display: none; }
+    .container { box-shadow: none; width: 100%; padding: 0; }
+}
