@@ -10,8 +10,46 @@ const ingredientsDrink = {
     flavor: ["Mint", "Ginger", "Berries", "Cucumber", "Lime", "Vanilla"]
 };
 
-let currentRound = 1;
-let results = { m1: [], m2: [], bev: [] };
+// Check if data already exists in browser memory
+let results = JSON.parse(localStorage.getItem('mysteryBoxResults')) || { m1: [], m2: [], bev: [] };
+let currentRound = parseInt(localStorage.getItem('mysteryBoxRound')) || 1;
+let isSubmitted = localStorage.getItem('mysteryBoxSubmitted') === 'true';
+
+// On Load: If already finished, skip to the end
+window.onload = () => {
+    if (isSubmitted) {
+        // If they already submitted, you might want to show the final screen 
+        // OR you can let them see the randomizer but with the "Locked" picks.
+        // For this midterm, we will restore their progress.
+        restoreProgress();
+    } else if (results.m1.length > 0) {
+        restoreProgress();
+    }
+};
+
+function restoreProgress() {
+    // Fill the slots with saved data
+    if (results.m1.length > 0 && currentRound <= 2) updateSlots(results.m1);
+    if (results.m2.length > 0 && currentRound === 3) updateSlots(results.m2);
+    if (results.bev.length > 0 && currentRound > 3) updateSlots(results.bev);
+    
+    // Update button text and titles based on round
+    if (currentRound === 2) {
+        document.getElementById('round-title').innerText = "🥘 Round 2: Main Dish 2";
+        document.getElementById('generate-btn').innerText = "Randomize Main 2";
+    } else if (currentRound === 3) {
+        setupDrinkUI();
+    } else if (currentRound > 3) {
+        showRecipeForm();
+    }
+}
+
+function updateSlots(picks) {
+    picks.forEach((item, i) => {
+        const slot = document.getElementById(`slot-${i}`);
+        if(slot) slot.innerText = item;
+    });
+}
 
 document.getElementById('generate-btn').addEventListener('click', async function() {
     this.disabled = true;
@@ -22,7 +60,6 @@ document.getElementById('generate-btn').addEventListener('click', async function
         const slot = document.getElementById(`slot-${i}`);
         let options = (currentRound === 2) ? pool[cats[i]].filter(x => !results.m1.includes(x)) : pool[cats[i]];
 
-        // Shuffle Animation
         for (let j = 0; j < 8; j++) {
             slot.innerText = options[Math.floor(Math.random() * options.length)];
             await new Promise(r => setTimeout(r, 60));
@@ -30,36 +67,53 @@ document.getElementById('generate-btn').addEventListener('click', async function
 
         const choice = options[Math.floor(Math.random() * options.length)];
         slot.innerText = choice;
-        results[currentRound === 1 ? 'm1' : currentRound === 2 ? 'm2' : 'bev'].push(choice);
+        
+        if (currentRound === 1) results.m1.push(choice);
+        else if (currentRound === 2) results.m2.push(choice);
+        else results.bev.push(choice);
+        
+        // Save picks to memory immediately
+        localStorage.setItem('mysteryBoxResults', JSON.stringify(results));
         await new Promise(r => setTimeout(r, 500));
     }
 
     currentRound++;
+    localStorage.setItem('mysteryBoxRound', currentRound);
     this.disabled = false;
     
     if (currentRound === 2) {
         document.getElementById('round-title').innerText = "🥘 Round 2: Main Dish 2";
         this.innerText = "Randomize Main 2";
     } else if (currentRound === 3) {
-        document.getElementById('round-title').innerText = "🥤 Round 3: Beverage";
-        document.querySelectorAll('.card')[2].style.display = "none";
-        document.querySelectorAll('.card')[3].style.display = "none";
-        this.innerText = "Randomize Beverage";
+        setupDrinkUI();
     } else {
-        document.getElementById('randomizer-section').style.display = "none";
-        document.getElementById('recipe-section').style.display = "block";
-        document.getElementById('final-summary').innerHTML = `<strong>Picks:</strong> M1: ${results.m1.join(", ")} | M2: ${results.m2.join(", ")} | Drink: ${results.bev.join(", ")}`;
+        showRecipeForm();
     }
 });
 
+function setupDrinkUI() {
+    document.getElementById('round-title').innerText = "🥤 Round 3: Beverage";
+    document.querySelectorAll('.card')[2].style.display = "none";
+    document.querySelectorAll('.card')[3].style.display = "none";
+    document.getElementById('generate-btn').innerText = "Randomize Beverage";
+    updateSlots(["?", "?"]); 
+}
+
+function showRecipeForm() {
+    document.getElementById('randomizer-section').style.display = "none";
+    document.getElementById('recipe-section').style.display = "block";
+    document.getElementById('final-summary').innerHTML = `<strong>Locked Picks:</strong> M1: ${results.m1.join(", ")} | M2: ${results.m2.join(", ")} | Drink: ${results.bev.join(", ")}`;
+}
+
 document.getElementById('recipe-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    document.getElementById('display-group-name').innerText = document.getElementById('group-name').value.toUpperCase();
+    localStorage.setItem('mysteryBoxSubmitted', 'true'); // Lock submission
     
+    document.getElementById('display-group-name').innerText = document.getElementById('group-name').value.toUpperCase();
     const banner = document.getElementById('display-members-list');
     banner.innerHTML = "";
     document.querySelectorAll('.member-input').forEach(input => {
-        if(input.value.trim() !== "") banner.innerHTML += `<span style="margin:0 10px;">• Chef ${input.value}</span>`;
+        if(input.value.trim() !== "") banner.innerHTML += `<span style="margin:0 10px; display:inline-block;">• Chef ${input.value}</span>`;
     });
 
     const container = document.getElementById('tables-container');
@@ -70,6 +124,7 @@ document.getElementById('recipe-form').addEventListener('submit', function(e) {
 
     document.getElementById('recipe-section').style.display = "none";
     document.getElementById('display-section').style.display = "block";
+    window.scrollTo(0,0);
 });
 
 function createRecipeCard(type, title, items, steps) {

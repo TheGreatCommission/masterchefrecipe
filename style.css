@@ -91,3 +91,134 @@ button {
     .action-buttons { display: none; }
     .container { box-shadow: none; width: 100%; padding: 0; }
 }
+:root {
+    --primary-orange: #e67e22;
+    --text-dark: #2d3436;
+}
+
+* { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background-color: #f4f7f9; margin: 0; display: flex; justify-content: center; padding: 20px 10px; }
+
+.container { 
+    width: 100%; max-width: 800px; background: white; padding: 30px; 
+    border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; 
+}
+
+/* Academic Header */
+.academic-info {
+    text-align: left; background: #f8f9fa; padding: 15px; border-radius: 10px;
+    border-left: 4px solid var(--text-dark); margin-bottom: 25px; font-size: 0.9rem;
+}
+.academic-info p { margin: 3px 0; color: #4b5563; }
+
+/* Grid and Inputs */
+.ingredient-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
+@media (min-width: 600px) { .ingredient-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.card { border: 1px solid #e0e0e0; border-radius: 10px; padding: 10px; }
+.card h3 { font-size: 0.65rem; color: #9ca3af; margin: 0 0 5px 0; }
+.slot { font-weight: bold; color: var(--text-dark); min-height: 40px; display: flex; align-items: center; justify-content: center; }
+
+.member-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; }
+input, textarea { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+
+button { 
+    width: 100%; background: var(--primary-orange); color: white; border: none; 
+    padding: 16px; font-size: 1.1rem; font-weight: bold; border-radius: 12px; cursor: pointer; 
+}
+
+/* Results */
+.recipe-card { border: 1px solid #eee; border-radius: 12px; margin-bottom: 25px; overflow: hidden; text-align: left; }
+.menu-table { width: 100%; border-collapse: collapse; }
+.menu-table th { background: var(--text-dark); color: #fab1a0; padding: 12px; text-align: left; }
+.menu-table td { padding: 12px; border-bottom: 1px solid #f3f4f6; }
+.label-cell { background: #fafafa; font-weight: bold; width: 30%; color: #6b7280; font-size: 0.75rem; text-transform: uppercase; }
+
+.lock-notice { color: #e74c3c; font-weight: bold; font-size: 0.85rem; margin-top: 15px; }
+
+/* Footer */
+.creator-footer { margin-top: 40px; text-align: right; border-top: 1px solid #eee; padding-top: 10px; }
+.creator-footer p { margin: 0; font-size: 0.75rem; color: #9ca3af; }
+.brand { font-size: 0.65rem !important; margin-top: 2px !important; color: #9ca3af; }
+
+@media print {
+    .action-buttons, .summary-box { display: none; }
+    .container { box-shadow: none; width: 100%; }
+    .academic-info { border: 1px solid #ddd; }
+}
+/* ... Keep all previous CSS ... */
+
+.academic-header {
+    text-align: left;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 5px solid #2d3436;
+    margin-bottom: 25px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.academic-header p {
+    margin: 2px 0;
+    color: #2d3436;
+}
+
+/* Ensure branding and academic header look perfect on print */
+@media print {
+    body { background: white; padding: 0; }
+    .container { box-shadow: none; border: none; }
+    .academic-header { border: 1px solid #ddd; background: white; }
+    .action-buttons { display: none; }
+    .creator-footer { position: fixed; bottom: 0; width: 100%; text-align: right; }
+}
+
+/* Mobile fix for long academic text */
+@media (max-width: 480px) {
+    .academic-header { font-size: 0.75rem; }
+}
+
+/* ... Previous Styles ... */
+
+.academic-header-output {
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.8;
+}
+
+.academic-header-output p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #57606f;
+}
+
+#display-group-name {
+    font-size: 2.5rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.team-banner {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* LocalStorage Warning/Notice */
+.summary-box {
+    background: #fff3cd;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    border: 1px solid #ffeeba;
+}
+
+@media print {
+    .action-buttons { display: none; }
+    .container { box-shadow: none; padding: 0; width: 100%; }
+}
